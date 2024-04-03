@@ -10,7 +10,7 @@ app.use(cors())
 app.use(express.json())
 
 app.get('/', (req, res) => {
-    res.send('projects drive file server is running!')
+    res.send('Verify certificate server is running!')
 })
 const password = encodeURIComponent(`${process.env.DB_PASS}`);
 const uri = `mongodb+srv://mubarak:${password}@mubarak-world-all-proje.tmrqr0p.mongodb.net/?retryWrites=true&w=majority&appName=mubarak-world-all-projects`;
@@ -95,5 +95,5 @@ async function run() {
 run().catch(err => console.error(err))
 
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
+    console.log(`verify certificate server-2024 listening on port ${port}`)
 })
