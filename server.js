@@ -90,6 +90,9 @@ async function run() {
     }
     finally {
         // await client.close();
+        app.get("/*",async(req,res)=>{
+            res.send("<div>This collection is not create yet!")
+        })
     }
 }
 run().catch(err => console.error(err))
