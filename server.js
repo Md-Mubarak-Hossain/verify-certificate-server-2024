@@ -42,6 +42,12 @@ async function run() {
             const result = await cursor.toArray();
             res.send(result)
         })
+        app.get('/post/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) };
+            const result = await postCollection.findOne(query);
+            res.send(result)
+        })
         app.post('/post', async (req, res) => {
             const user = req.body;
             const result = await postCollection.insertOne(user);
@@ -91,7 +97,7 @@ async function run() {
     finally {
         // await client.close();
         app.get("/*",async(req,res)=>{
-            res.send("<div>This collection is not create yet!")
+            res.send("This collection is not create yet!")
         })
     }
 }
