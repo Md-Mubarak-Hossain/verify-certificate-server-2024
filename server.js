@@ -48,33 +48,44 @@ async function run() {
             const result = await postCollection.findOne(query);
             res.send(result)
         })
+        app.delete('/post/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) };
+            const result = await postCollection.deleteOne(query);
+            res.send(result)
+        })
         app.post('/post', async (req, res) => {
             const user = req.body;
             const result = await postCollection.insertOne(user);
             console.log(result);
             res.send(result);
         })
-        app.put('/post/:id', async (req, res) => {
+        app.patch('/post/:id', async (req, res) => {
             const id = req.params.id;
-            console.log(id);
-            const filter = {
-                _id: new ObjectId(id)
-            };
-            const post = req.body;
-            console.log(post);
-            const options = { upsert: true };
-            const updateDoc = {
+            const filter = { _id: ObjectId(id) }
+            const information = req.body;
+            const updatePostData = {
                 $set: {
-                    images
+                    id,uid,user,userEmail,contact, image,
+                    roll: information.roll,
+                    registration: information.registration,
+                    name: information.name,
+                    email: information.email,
+                    university: information.university,
+                    country: information.country,
+                    author: information.author,
+                    journal: information.journal,
+                    session: information.session,
+                   
+                    
                 }
             }
-            const result = await postCollection.updateOne(filter, updateDoc, options);
-            res.send(result);
-            console.log(result);
+            const result = await postCollection.updateOne(filter, updatePostData)
+            res.send(result)
         })
         app.delete('/post/:id', async (req, res) => {
             const id = req.params.id;
-            const query = { _id: ObjectId(id) };
+            const query = { _id: new ObjectId(id) };
             const result = await postCollection.deleteOne(query);
             res.send(result);
         })
