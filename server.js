@@ -62,11 +62,10 @@ async function run() {
         })
         app.patch('/post/:id', async (req, res) => {
             const id = req.params.id;
-            const filter = { _id: ObjectId(id) }
+            const filter = { _id: new ObjectId(id) }
             const information = req.body;
             const updatePostData = {
-                $set: {
-                    id,uid,user,userEmail,contact, image,
+                $set: { id,uid,user,userEmail,contact, image,
                     roll: information.roll,
                     registration: information.registration,
                     name: information.name,
