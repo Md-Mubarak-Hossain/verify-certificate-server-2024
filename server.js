@@ -65,7 +65,12 @@ async function run() {
             const filter = { _id: new ObjectId(id) }
             const information = req.body;
             const updatePostData = {
-                $set: { id,uid,user,userEmail,contact, image,
+                $set: { id: information.id,
+                    uid: information.uid,
+                    user: information.user,
+                    userEmail: information.userEmail,
+                    contact: information.contact, 
+                    image: information.image,
                     roll: information.roll,
                     registration: information.registration,
                     name: information.name,
