@@ -21,6 +21,7 @@ async function run() {
         const database = client.db("verifyCertificate");
         const certificateCollection = database.collection("DataHouse");
         const postCollection = database.collection("postData");
+        const profileCollection = database.collection("profileData");
         const verifiedCollection = database.collection("verifiedData");
 // Data collection server
         app.get('/certificate', async (req, res) => {
@@ -87,12 +88,60 @@ async function run() {
             const result = await postCollection.updateOne(filter, updatePostData)
             res.send(result)
         })
-        app.delete('/post/:id', async (req, res) => {
+       
+// user profile data
+        app.get('/profile', async (req, res) => {
+            const query = {};
+            const cursor = profileCollection.find(query);
+            const result = await cursor.toArray();
+            res.send(result)
+        })
+        app.get('/profile/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: new ObjectId(id) };
-            const result = await postCollection.deleteOne(query);
+            const result = await profileCollection.findOne(query);
+            res.send(result)
+        })
+        app.delete('/profile/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) };
+            const result = await profileCollection.deleteOne(query);
+            res.send(result)
+        })
+        app.post('/profile', async (req, res) => {
+            const user = req.body;
+            const result = await profileCollection.insertOne(user);
+            console.log(result);
             res.send(result);
         })
+        app.patch('/profile/:id', async (req, res) => {
+            const id = req.params.id;
+            const filter = { _id: new ObjectId(id) }
+            const information = req.body;
+            const updateProfileData = {
+                $set: { id: information.id,
+                    uid: information.uid,
+                    user: information.user,
+                    userEmail: information.userEmail,
+                    contact: information.contact, 
+                    image: information.image,
+                    roll: information.roll,
+                    registration: information.registration,
+                    name: information.name,
+                    email: information.email,
+                    university: information.university,
+                    country: information.country,
+                    author: information.author,
+                    journal: information.journal,
+                    session: information.session,
+                   
+                    
+                }
+            }
+            const result = await profileCollection.updateOne(filter, updateProfileData)
+            res.send(result)
+        })
+        
 
 // User or organization match data with data house
         app.get('/verified', async (req, res) => {
