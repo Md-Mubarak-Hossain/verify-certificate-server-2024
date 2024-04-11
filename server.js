@@ -23,7 +23,7 @@ async function run() {
         const postCollection = database.collection("postData");
         const profileCollection = database.collection("profileData");
         const verifiedCollection = database.collection("verifiedData");
-// Data collection server
+        // Data collection server
         app.get('/certificate', async (req, res) => {
             const query = {};
             const cursor = certificateCollection.find(query);
@@ -32,11 +32,11 @@ async function run() {
         })
         app.get('/certificate/:id', async (req, res) => {
             const id = req.params.id;
-            const query = { _id:new ObjectId(id) };
+            const query = { _id: new ObjectId(id) };
             const result = await certificateCollection.findOne(query);
             res.send(result)
         })
-// user or organization post data
+        // user or organization post data
         app.get('/post', async (req, res) => {
             const query = {};
             const cursor = postCollection.find(query);
@@ -66,11 +66,12 @@ async function run() {
             const filter = { _id: new ObjectId(id) }
             const information = req.body;
             const updatePostData = {
-                $set: { id: information.id,
+                $set: {
+                    id: information.id,
                     uid: information.uid,
                     user: information.user,
                     userEmail: information.userEmail,
-                    contact: information.contact, 
+                    contact: information.contact,
                     image: information.image,
                     roll: information.roll,
                     registration: information.registration,
@@ -81,15 +82,15 @@ async function run() {
                     author: information.author,
                     journal: information.journal,
                     session: information.session,
-                   
-                    
+
+
                 }
             }
             const result = await postCollection.updateOne(filter, updatePostData)
             res.send(result)
         })
-       
-// user profile data
+
+        // user profile data
         app.get('/profile', async (req, res) => {
             const query = {};
             const cursor = profileCollection.find(query);
@@ -119,31 +120,27 @@ async function run() {
             const filter = { _id: new ObjectId(id) }
             const information = req.body;
             const updateProfileData = {
-                $set: { id: information.id,
-                    uid: information.uid,
-                    user: information.user,
-                    userEmail: information.userEmail,
-                    contact: information.contact, 
-                    image: information.image,
-                    roll: information.roll,
-                    registration: information.registration,
-                    name: information.name,
-                    email: information.email,
-                    university: information.university,
-                    country: information.country,
-                    author: information.author,
-                    journal: information.journal,
-                    session: information.session,
-                   
-                    
+                $set: {
+                    linkedin:information.linkedin,
+                    instagram:information.instagram,
+                    contact:information.contact,
+                    facebook:information.facebook,
+                    youtube:information.youtube,
+                    twitter:information.twitter,
+                    website:information.website,
+                    github:information.github,
+                    user:information.user,
+                    email:information.email,
+                    uid:information.uid,
+                    photo:information.photo,
                 }
             }
             const result = await profileCollection.updateOne(filter, updateProfileData)
             res.send(result)
         })
-        
 
-// User or organization match data with data house
+
+        // User or organization match data with data house
         app.get('/verified', async (req, res) => {
             const query = {};
             const cursor = verifiedCollection.find(query);
@@ -160,7 +157,7 @@ async function run() {
     }
     finally {
         // await client.close();
-        app.get("/*",async(req,res)=>{
+        app.get("/*", async (req, res) => {
             res.send("This collection is not create yet!")
         })
     }
