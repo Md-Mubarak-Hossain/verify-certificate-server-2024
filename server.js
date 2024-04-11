@@ -124,6 +124,7 @@ async function run() {
                     linkedin:information.linkedin,
                     instagram:information.instagram,
                     contact:information.contact,
+                    whatsapp:information.whatsapp,
                     facebook:information.facebook,
                     youtube:information.youtube,
                     twitter:information.twitter,
