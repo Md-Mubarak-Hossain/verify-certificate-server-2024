@@ -45,6 +45,13 @@ async function run() {
         })
         app.delete('/post', async (req, res) => {
             const query = {};
+          
+            const result = await postCollection.deleteMany(query);
+            res.send(result)
+        })
+        app.delete('/post/:email', async (req, res) => {
+            const query = req.body.userEmail;
+            console.log(params);
             const result = await postCollection.deleteMany(query);
             res.send(result)
         })
@@ -56,7 +63,7 @@ async function run() {
         })
         app.delete('/post/:id', async (req, res) => {
             const id = req.params.id;
-            const query = { _id: ObjectId(id) };
+            const query = { _id: new ObjectId(id) };
             const result = await postCollection.deleteOne(query);
             res.send(result)
         })
