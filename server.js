@@ -43,6 +43,11 @@ async function run() {
             const result = await cursor.toArray();
             res.send(result)
         })
+        app.delete('/post', async (req, res) => {
+            const query = {};
+            const result = await postCollection.deleteMany(query);
+            res.send(result)
+        })
         app.get('/post/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: new ObjectId(id) };
@@ -51,7 +56,7 @@ async function run() {
         })
         app.delete('/post/:id', async (req, res) => {
             const id = req.params.id;
-            const query = { _id: new ObjectId(id) };
+            const query = { _id: ObjectId(id) };
             const result = await postCollection.deleteOne(query);
             res.send(result)
         })
@@ -121,19 +126,19 @@ async function run() {
             const information = req.body;
             const updateProfileData = {
                 $set: {
-                    linkedin:information.linkedin,
-                    instagram:information.instagram,
-                    contact:information.contact,
-                    whatsapp:information.whatsapp,
-                    facebook:information.facebook,
-                    youtube:information.youtube,
-                    twitter:information.twitter,
-                    website:information.website,
-                    github:information.github,
-                    user:information.user,
-                    email:information.email,
-                    uid:information.uid,
-                    photo:information.photo,
+                    linkedin: information.linkedin,
+                    instagram: information.instagram,
+                    contact: information.contact,
+                    whatsapp: information.whatsapp,
+                    facebook: information.facebook,
+                    youtube: information.youtube,
+                    twitter: information.twitter,
+                    website: information.website,
+                    github: information.github,
+                    user: information.user,
+                    email: information.email,
+                    uid: information.uid,
+                    photo: information.photo,
                 }
             }
             const result = await profileCollection.updateOne(filter, updateProfileData)
